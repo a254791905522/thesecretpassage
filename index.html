@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Passages: Hidden Objects — Find Secrets. Solve Mysteries.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            background:
+                radial-gradient(ellipse 90% 60% at 50% 0%, rgba(124, 77, 168, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 50% at 100% 70%, rgba(183, 28, 28, 0.12) 0%, transparent 45%),
+                radial-gradient(ellipse 55% 40% at 0% 40%, rgba(74, 20, 140, 0.25) 0%, transparent 50%),
+                linear-gradient(175deg, #0d0618 0%, #1a0f2e 45%, #080410 100%);
+            color: #d4c4e8;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .vault-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.08) 0%, transparent 70%);
+            top: -5%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: pulse 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
+        .container {
+            max-width: 640px;
+            width: 100%;
+            background: linear-gradient(160deg, rgba(30, 18, 48, 0.96) 0%, rgba(12, 6, 22, 0.98) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 8px;
+            padding: 44px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+                0 32px 64px rgba(0, 0, 0, 0.65),
+                0 0 80px rgba(94, 53, 177, 0.15);
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid rgba(124, 77, 168, 0.25);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .icon-wrap {
+            width: 112px;
+            height: 112px;
+            margin: 0 auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 224, 130, 0.15) 0%, transparent 50%),
+                linear-gradient(145deg, #3d2666 0%, #1a0f2e 60%, #0d0618 100%);
+            box-shadow:
+                0 0 0 2px rgba(212, 175, 55, 0.4),
+                0 12px 32px rgba(0, 0, 0, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .icon-wrap svg {
+            width: 64px;
+            height: 64px;
+            filter: drop-shadow(0 2px 8px rgba(255, 193, 7, 0.25));
+        }
+
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            color: #fff8e7;
+            line-height: 1.25;
+        }
+
+        h1 span.gold {
+            background: linear-gradient(105deg, #ffe082, #ffd54f, #ffb300);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #b39ddb;
+            margin-bottom: 22px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+
+        .chip {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 7px 12px;
+            border-radius: 2px;
+            background: rgba(74, 20, 140, 0.35);
+            color: #e1bee7;
+            border: 1px solid rgba(186, 104, 200, 0.35);
+        }
+
+        .chip.amber {
+            background: rgba(255, 193, 7, 0.12);
+            color: #ffe082;
+            border-color: rgba(255, 213, 79, 0.45);
+        }
+
+        .lead {
+            text-align: left;
+            color: #c5b8dc;
+            line-height: 1.8;
+            font-size: 1.02rem;
+            margin-bottom: 24px;
+        }
+
+        .lead strong {
+            color: #fff8e7;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin-bottom: 26px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 20px 0;
+        }
+
+        .feature-list h2 {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #ffd54f;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .feature-list ul {
+            list-style: none;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 12px;
+            font-size: 0.92rem;
+            color: #b39ddb;
+            line-height: 1.55;
+        }
+
+        .feature-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-list li::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: rgba(255, 213, 79, 0.65);
+            font-size: 0.55rem;
+            top: 0.45em;
+        }
+
+        .worlds {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.88rem;
+            color: #9e8bc4;
+            line-height: 1.65;
+            margin-bottom: 26px;
+            font-style: italic;
+        }
+
+        .cta {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 15px 34px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #1a0f0a;
+            text-decoration: none;
+            border-radius: 4px;
+            background: linear-gradient(180deg, #ffe082 0%, #ffb300 100%);
+            box-shadow: 0 8px 24px rgba(255, 152, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+            border: 1px solid rgba(255, 248, 225, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 152, 0, 0.45);
+        }
+
+        .foot {
+            margin-top: 26px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(124, 77, 168, 0.3);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.85rem;
+            color: #7e7199;
+        }
+
+        .foot a {
+            color: #ce93d8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .foot a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                padding: 32px 22px;
+            }
+            h1 {
+                font-size: 1.38rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vault-grid" aria-hidden="true"></div>
+    <div class="glow-orb" aria-hidden="true"></div>
+
+    <div class="container">
+        <div class="icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="26" cy="26" r="14" fill="none" stroke="#ffd54f" stroke-width="3" opacity="0.95"/>
+                <line x1="36" y1="36" x2="52" y2="52" stroke="#b39ddb" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="26" cy="26" r="6" fill="rgba(255,213,79,0.15)"/>
+            </svg>
+        </div>
+
+        <h1>Secret Passages: <span class="gold">Hidden Objects</span></h1>
+        <p class="tagline">Find secrets · Solve mysteries</p>
+
+        <div class="chips">
+            <span class="chip amber">Puzzle</span>
+            <span class="chip">Hidden object</span>
+            <span class="chip amber">Free</span>
+            <span class="chip">iOS 15+</span>
+        </div>
+
+        <p class="lead">
+            <strong>Step into richly drawn scenes</strong> where every corner may conceal a clue. Search for cleverly hidden items, enjoy smooth animated reveals, and unwind with a calm pace that still rewards sharp eyes. From enchanted gardens to timeworn ruins, each level offers a fresh tableau and a new riddle of objects to find.
+        </p>
+
+        <div class="feature-list">
+            <h2>What awaits inside</h2>
+            <ul>
+                <li>Immersive hidden-object play with satisfying discovery feedback</li>
+                <li>Smooth object motion and polished transitions between interactions</li>
+                <li>Multiple handcrafted levels across distinctive themes and moods</li>
+                <li>Clean, intuitive layout so you can focus on the scene, not the controls</li>
+                <li>Relaxing flow with depth for players who love puzzles and mysteries</li>
+            </ul>
+        </div>
+
+        <p class="worlds">
+            Whether you play for a quiet break or to chase every last secret, a hidden-object adventure built around atmosphere, detail, and the joy of the find is ready when you are.
+        </p>
+
+        <a href="https://apps.apple.com/us/app/secret-passages-hidden-objects/id1031464194?uo=4" class="cta" target="_blank" rel="noopener noreferrer">View on the App Store</a>
+
+        <div class="foot">
+            <a href="privacy.html">Privacy overview</a>
+        </div>
+    </div>
+</body>
+
+</html>

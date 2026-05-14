@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy — Secret Passages: Hidden Objects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            background: #06040e;
+            color: #c4b5dc;
+            line-height: 1.7;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .rim-light {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(125deg, transparent 40%, rgba(255, 213, 79, 0.04) 50%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .mast {
+            border-left: 4px solid #ffb300;
+            padding: 8px 0 8px 22px;
+            margin-bottom: 36px;
+        }
+
+        .mast .kicker {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #9575cd;
+            margin-bottom: 10px;
+        }
+
+        .mast h1 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 800;
+            color: #fff8e7;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .mast .deck {
+            font-size: 1rem;
+            color: #9e8bc4;
+            max-width: 38rem;
+        }
+
+        article {
+            background: rgba(22, 14, 38, 0.65);
+            border: 1px solid rgba(186, 104, 200, 0.22);
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        article section {
+            padding: 22px 24px 24px;
+            border-bottom: 1px solid rgba(124, 77, 168, 0.2);
+        }
+
+        article section:last-of-type {
+            border-bottom: none;
+        }
+
+        article h2 {
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #ffd54f;
+            margin-bottom: 12px;
+        }
+
+        article p {
+            font-size: 0.95rem;
+            color: #c5b8dc;
+        }
+
+        article p + p {
+            margin-top: 12px;
+        }
+
+        .stamp {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 24px 24px;
+            background: linear-gradient(180deg, rgba(74, 20, 140, 0.2) 0%, transparent 100%);
+        }
+
+        .stamp .glyph {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 193, 7, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #ffe082;
+            background: rgba(13, 6, 22, 0.6);
+        }
+
+        .stamp p {
+            font-size: 0.93rem;
+            color: #b39ddb;
+        }
+
+        aside.disclaimer {
+            font-size: 0.82rem;
+            color: #6d5f8a;
+            padding: 16px 4px 0;
+            border-top: 1px dashed rgba(124, 77, 168, 0.35);
+            margin-top: 8px;
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 36px;
+        }
+
+        nav a {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: #1a0f0a;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 4px;
+            display: inline-block;
+            background: linear-gradient(180deg, #e1bee7 0%, #ba68c8 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s, filter 0.2s;
+        }
+
+        nav a:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="rim-light" aria-hidden="true"></div>
+
+    <div class="page">
+        <header class="mast">
+            <p class="kicker">Secret Passages: Hidden Objects</p>
+            <h1>Privacy statement</h1>
+            <p class="deck">This document describes how information is handled in connection with the mobile game distributed on the Apple App Store under that title. It is written for players and families in ordinary language.</p>
+        </header>
+
+        <article>
+            <section>
+                <h2>Summary</h2>
+                <p>The product is a self-contained puzzle experience on your device. You are not asked to register a separate in-game identity to play. The distributor’s storefront may show an “App Privacy” nutrition label; if that label lists no data types collected by the app, that summary is the high-level reference alongside this page.</p>
+            </section>
+            <section>
+                <h2>Data on your device</h2>
+                <p>Like many casual titles, the software may keep gameplay-related details on the handset itself—for example progress within levels, preferences you set in the app, or similar state needed to resume play. That information lives in the app’s sandbox unless you use a system feature that explicitly syncs or backs it up according to your device settings.</p>
+                <p>Removing the application or erasing its data through iOS settings clears that local content from the device in the usual way.</p>
+            </section>
+            <section>
+                <h2>Advertising</h2>
+                <p>The age and content disclosures on the store listing indicate that advertising may appear. Ad networks, if present, operate under their own technical rules; you can limit ad tracking at the system level using Apple’s privacy controls for your device.</p>
+            </section>
+            <section>
+                <h2>Apple and Game Center</h2>
+                <p>Installing, updating, or restoring purchases happens through Apple’s infrastructure, which has its own agreements and privacy notices. Optional social features such as leaderboards, when enabled, rely on Apple’s Game Center services and the Apple ID you already use on the device.</p>
+            </section>
+            <section>
+                <h2>Younger players</h2>
+                <p>The title is intended for a general audience. Guardians can use Screen Time, Ask to Buy, and other parental tools built into iOS and the App Store to supervise installs, in-app activity, and purchases on shared hardware.</p>
+            </section>
+            <section>
+                <h2>Changes</h2>
+                <p>Gameplay, platform requirements, or regulatory guidance can evolve. When a material change occurs, this text may be revised so it continues to reflect how the product is meant to behave.</p>
+            </section>
+
+            <div class="stamp">
+                <div class="glyph" aria-hidden="true">✦</div>
+                <p>Nothing in this overview replaces mandatory notices from Apple or rights that apply where you live. For account-level requests that involve your Apple ID, use Apple’s privacy and data tools in addition to managing the app on your devices.</p>
+            </div>
+        </article>
+
+        <aside class="disclaimer">Last updated: May 2026. This page applies to the App Store edition of the game named above.</aside>
+
+        <nav>
+            <a href="index.html">Return to overview</a>
+        </nav>
+    </div>
+</body>
+
+</html>
